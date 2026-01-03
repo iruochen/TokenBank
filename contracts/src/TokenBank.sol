@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {SafeERC20, IERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract TokenBank is ReentrancyGuard {
     using SafeERC20 for IERC20;
@@ -21,7 +21,10 @@ contract TokenBank is ReentrancyGuard {
      * @param tokenAddr 代币合约地址
      * @param amount 存入的代币数量
      */
-    function deposit(address tokenAddr, uint256 amount) external nonReentrant {
+    function deposit(
+        address tokenAddr,
+        uint256 amount
+    ) external virtual nonReentrant {
         if (amount == 0) {
             revert ZeroAmount();
         }
@@ -46,6 +49,9 @@ contract TokenBank is ReentrancyGuard {
         if (userTokens[msg.sender][tokenAddr] < amount) {
             revert InsufficientBalance();
         }
+
+        userTokens[msg.sender][tokenAddr] -= amount;
+
         IERC20 token = IERC20(tokenAddr);
         require(token.transfer(msg.sender, amount), "Transfer failed");
         emit Withdraw(msg.sender, tokenAddr, amount);

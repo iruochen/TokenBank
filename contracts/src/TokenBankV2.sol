@@ -22,7 +22,9 @@ contract TokenBankV2 is TokenBank, ITokenReceiver, Ownable {
         uint256 amount,
         bytes calldata
     ) external override returns (bytes4) {
-        require(amount > 0, "Amount must be greater than zero");
+        if (amount == 0) {
+            revert ZeroAmount();
+        }
         require(supportedTokens[msg.sender], "Unsupported token");
 
         userTokens[from][msg.sender] += amount;
