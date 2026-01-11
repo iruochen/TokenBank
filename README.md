@@ -1,109 +1,147 @@
-# RCH Token & TokenBankV2
+# TokenBank Project
 
-一个基于 Solidity 的自定义 ERC20 代币（RCH） + 通用代币银行（TokenBankV2）项目，支持两种存款方式：
+<div align="center">
+<img src="public/screenshots/TokenBank.png" alt="TokenBank Screenshot" width="800" />
+</div>
 
-- 传统拉取式存款（`deposit` + `approve` + `transferFrom`）
-- 推送式回调存款（`transferWithCallback` → 自动触发 `tokenReceived` 钩子）
+<div align="center">
 
-项目在 Sepolia 测试网已成功部署并实测通过。
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Foundry](https://img.shields.io/badge/Foundry-v0.2.0-orange)](https://getfoundry.sh/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
 
-## 项目结构
+[English](#english) | [中文](#chinese)
 
-```shell
+</div>
+
+---
+
+<a name="english"></a>
+
+## 🇬🇧 English
+
+### Overview
+
+TokenBank is a comprehensive Web3 Decentralized Application (DApp) that demonstrates secure ERC-20 token management. The project consists of a robust set of smart contracts and a modern, responsive frontend interface. Users can deposit tokens into the bank using two methods: the standard `Approve + Deposit` flow and a more gas-efficient `transferWithCallback` (ERC-1363 style) mechanism that executes deposits in a single transaction.
+
+The project is structured as a monorepo containing:
+
+- **Contracts**: Solidity smart contracts for the TokenBank logic and the RCH custom token, developed with Foundry.
+- **Frontend**: A Next.js 15 application using Wagmi and RainbowKit for wallet interaction.
+
+### 📂 Project Structure
+
+```bash
 TokenBank/
-├── contracts/
-│ ├── src/
-│ │ ├── RCH.sol # 带回调转账的 ERC20 代币
-│ │ ├── TokenBank.sol # 基础银行合约（支持普通存取）
-│ │ └── TokenBankV2.sol # 升级版银行，支持回调存款 + 白名单
-│ ├── script/
-│ │ └── DeployAll.s.sol # 一键部署脚本
-│ ├── test/
-│ │ ├── RCH.t.sol
-│ │ └── TokenBankV2.t.sol
-│ └── foundry.toml
-├── frontend/ # （可选）前端目录，可自行扩展
-├── .gitignore
-└── README.md
+├── contracts/       # Smart Contracts (Foundry)
+│   ├── src/         # Payment Token (RCH) & Banking Logic
+│   ├── test/        # Unit & Integration Tests
+│   └── script/      # Deployment Scripts
+└── frontend/        # Frontend Application (Next.js)
+    ├── src/         # Components, Hooks, and Pages
+    └── ...
 ```
 
-## 核心特性
+### ✨ Key Features
 
-### RCH 代币
+- **Custom ERC-20 Token (RCH)**: A token implementation that supports callback hooks for smoother UX.
+- **Smart Deposits**:
+  - Standard Delegate Transfer (`approve` + `deposit`).
+  - Callback-based Transfer (`transferWithCallback`), reducing steps for the user.
+- **Secure Withdrawals**: Users can withdraw their deposited funds at any time.
+- **Full-Stack Integration**: Complete end-to-end integration between the frontend DApp and deployed contracts.
 
-- 总供应量：1,000,000,000 RCH（18 位小数）
-- 支持标准 `transfer` / `transferFrom`
-- 新增 `transferWithCallback(address to, uint256 amount, bytes data)`：
-  - 转账后自动检测接收方是否为合约
-  - 如果是合约，则调用其 `tokenReceived` 钩子（类似 ERC777）
-  - 支持 data 为空（填 `0x` 即可）
+### 🚀 Quick Start
 
-### TokenBankV2
+#### 1. Smart Contracts
 
-- 继承自 TokenBank，支持普通存取
-- 实现 `ITokenReceiver` 接口
-- 支持回调存款：用户直接向银行地址转 RCH（使用 `transferWithCallback`），自动记录余额
-- 白名单机制（`addSupportedToken`），防止恶意合约调用
-- 重入防护（ReentrancyGuard）
-- 统一使用 custom error `ZeroAmount()`
+Navigate to the `contracts` directory to compile and test the contracts.
 
-## Sepolia 测试网部署地址（2026-01-04 部署）
-
-- **RCH**: [0xb42c5a0B067e0622fBfE606B63F0181776025817](https://sepolia.etherscan.io/token/0xb42c5a0B067e0622fBfE606B63F0181776025817)
-- **TokenBankV2**: [0xb3D3473c636b7B5E2f0E64353276e17721c0Bc0E](https://sepolia.etherscan.io/address/0xb3d3473c636b7b5e2f0e64353276e17721c0bc0e)
-
-> 已验证合约，已实测回调存款成功。
-
-## 开发 & 测试
-
-### 安装依赖
-
-```shell
+```bash
+cd contracts
 forge install
-```
-
-### 编译
-
-```shell
 forge build
+forge test
 ```
 
-### 运行测试（已全通过）
+#### 2. Frontend
 
-```shell
-forge test -vvv
+Navigate to the `frontend` directory to run the DApp locally.
+
+```bash
+cd frontend
+pnpm install
+pnpm dev
+# Open http://localhost:3000 in your browser
 ```
 
-### 部署到 Sepolia（需配置 .env）
+For more detailed instructions, please refer to the `README.md` files in the respective directories:
 
-```shell
-forge script script/DeployAll.s.sol:DeployAll \
- --rpc-url sepolia \
- --broadcast \
- --verify \
- --private-key $DEPLOYER_PRIVATE_KEY
+- [Contracts Documentation](./contracts/README.md)
+- [Frontend Documentation](./frontend/README.md)
+
+---
+
+<a name="chinese"></a>
+
+## 🇨🇳 中文
+
+### 项目简介
+
+TokenBank 是一个完整的 Web3 去中心化应用 (DApp) 案例，演示了安全的 ERC-20 代币管理系统。该项目包含一套稳健的智能合约和一个现代化的前端界面。用户可以通过两种方式将代币存入银行：传统的 `授权 (Approve) + 存款 (Deposit)` 流程，以及更高效的 `transferWithCallback` (类似 ERC-1363) 机制，支持在单笔交易中完成存款。
+
+本项目采用单体仓库 (Monorepo) 结构：
+
+- **Contracts**: 使用 Foundry 开发的 Solidity 智能合约，包含 TokenBank 核心逻辑和自定义的 RCH 代币。
+- **Frontend**: 使用 Next.js 15、Wagmi 和 RainbowKit 构建的前端应用。
+
+### 📂 项目结构
+
+```bash
+TokenBank/
+├── contracts/       # 智能合约 (Foundry)
+│   ├── src/         # RCH 代币与银行合约逻辑
+│   ├── test/        # 单元测试与集成测试
+│   └── script/      # 部署脚本
+└── frontend/        # 前端应用 (Next.js)
+    ├── src/         # 组件、Hooks 与页面逻辑
+    └── ...
 ```
 
-## 使用示例（MetaMask / Etherscan）
+### ✨ 主要功能
 
-1. 添加 RCH 到 MetaMask
+- **自定义 ERC-20 代币 (RCH)**: 实现了回调钩子的代币合约，提供更流畅的用户体验。
+- **智能存款**:
+  - 标准存款: 经典的 `approve` + `deposit` 模式。
+  - 回调存款: `transferWithCallback` 模式，减少用户操作步骤，一键完成。
+- **安全取款**: 用户可以随时提取存入银行的资金。
+- **全栈集成**: 实现了前端 DApp 与链上合约的完整端到端交互。
 
-   - 合约地址：0xb42c5a0B067e0622fBfE606B63F0181776025817
-   - 符号：RCH
-   - 小数位：18
+### 🚀 快速开始
 
-2. 回调存款（推送式）
+#### 1. 智能合约
 
-   - 发送 RCH 到 TokenBankV2 地址：0xb3D3473c636b7B5E2f0E64353276e17721c0Bc0E
-   - 使用 `transferWithCallback` 函数（Etherscan Write Contract）
-   - data 填 `0x`（空）
+进入 `contracts` 目录进行编译和测试。
 
-3. 查询银行余额
-   - TokenBankV2 → Read Contract → `balanceOf(your_address, RCH_address)`
+```bash
+cd contracts
+forge install
+forge build
+forge test
+```
 
-## 后续计划
-- [ ] 前端存款/提款界面
+#### 2. 前端应用
 
-## License
+进入 `frontend` 目录启动本地开发服务器。
 
-MIT
+```bash
+cd frontend
+pnpm install
+pnpm dev
+# 在浏览器中打开 http://localhost:3000
+```
+
+更多详细信息，请参阅各自目录下的文档：
+
+- [智能合约文档](./contracts/README.md)
+- [前端应用文档](./frontend/README.md)
