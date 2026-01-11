@@ -8,7 +8,7 @@
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Foundry](https://img.shields.io/badge/Foundry-v0.2.0-orange)](https://getfoundry.sh/)
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 
 [English](#english) | [中文](#chinese)
 
@@ -27,7 +27,7 @@ TokenBank is a comprehensive Web3 Decentralized Application (DApp) that demonstr
 The project is structured as a monorepo containing:
 
 - **Contracts**: Solidity smart contracts for the TokenBank logic and the RCH custom token, developed with Foundry.
-- **Frontend**: A Next.js 15 application using Wagmi and RainbowKit for wallet interaction.
+- **Frontend**: A Next.js 16 application using Wagmi and RainbowKit for wallet interaction.
 
 ### 📂 Project Structure
 
@@ -93,7 +93,7 @@ TokenBank 是一个完整的 Web3 去中心化应用 (DApp) 案例，演示了�
 本项目采用单体仓库 (Monorepo) 结构：
 
 - **Contracts**: 使用 Foundry 开发的 Solidity 智能合约，包含 TokenBank 核心逻辑和自定义的 RCH 代币。
-- **Frontend**: 使用 Next.js 15、Wagmi 和 RainbowKit 构建的前端应用。
+- **Frontend**: 使用 Next.js 16、Wagmi 和 RainbowKit 构建的前端应用。
 
 ### 📂 项目结构
 
