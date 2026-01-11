@@ -480,8 +480,11 @@ export default function TokenBank() {
 									value={depositAmount}
 									onChange={(e) => setDepositAmount(e.target.value)}
 									placeholder="0.0"
-									className="w-full pl-4 pr-16 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 placeholder:text-slate-400 transition-all"
+									className="w-full pl-4 pr-20 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 text-slate-900 placeholder:text-slate-400 transition-all font-mono text-lg"
 								/>
+								<div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">
+									{tokenSymbol || "RCH"}
+								</div>
 							</div>
 						</div>
 						<div className="text-xs font-medium text-slate-500 flex justify-between bg-slate-50 p-2 rounded-lg">
@@ -528,8 +531,11 @@ export default function TokenBank() {
 									value={withdrawAmount}
 									onChange={(e) => setWithdrawAmount(e.target.value)}
 									placeholder="0.0"
-									className="w-full pl-4 pr-16 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 text-slate-900 placeholder:text-slate-400 transition-all"
+									className="w-full pl-4 pr-20 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 text-slate-900 placeholder:text-slate-400 transition-all font-mono text-lg"
 								/>
+								<div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 font-medium text-sm">
+									{tokenSymbol || "RCH"}
+								</div>
 							</div>
 						</div>
 						<div className="h-8.5 hidden md:block"></div>{" "}
