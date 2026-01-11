@@ -1,27 +1,15 @@
 "use client"
-import { config } from "../config/wagmi"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { WagmiProvider } from "wagmi"
-import { RainbowKitProvider, lightTheme } from "@rainbow-me/rainbowkit"
-import "@rainbow-me/rainbowkit/styles.css"
 
-const queryClient = new QueryClient()
+import dynamic from "next/dynamic"
+import React from "react"
+
+// Dynamically import the core provider with SSR disabled
+// This prevents the 'indexedDB is not defined' error during build
+// because WalletConnect/Wagmi config (which uses window/indexedDB) is never evaluated on the server.
+const Web3ProviderCore = dynamic(() => import("./Web3ProviderCore"), {
+	ssr: false,
+})
 
 export function Web3Provider({ children }: { children: React.ReactNode }) {
-	return (
-		<WagmiProvider config={config}>
-			<QueryClientProvider client={queryClient}>
-				<RainbowKitProvider
-					theme={lightTheme({
-						accentColor: "#2563eb",
-						accentColorForeground: "#ffffff",
-						borderRadius: "medium",
-					})}
-					modalSize="compact"
-				>
-					{children}
-				</RainbowKitProvider>
-			</QueryClientProvider>
-		</WagmiProvider>
-	)
+	return <Web3ProviderCore>{children}</Web3ProviderCore>
 }
