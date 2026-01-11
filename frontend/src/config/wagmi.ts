@@ -2,12 +2,10 @@ import { getDefaultConfig } from "@rainbow-me/rainbowkit"
 import { mainnet, sepolia, localhost } from "wagmi/chains"
 import { cookieStorage, createStorage } from "wagmi"
 
-console.log("project id: ", process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID)
-
 export const config = getDefaultConfig({
 	appName: "TokenBank DApp",
 	projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || "",
-	chains: [mainnet, sepolia, localhost],
+	chains: [sepolia, mainnet, localhost],
 	ssr: true,
 	storage: createStorage({
 		storage: cookieStorage,
