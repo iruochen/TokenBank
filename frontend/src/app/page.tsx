@@ -18,10 +18,15 @@ import { useEffect, useState } from "react"
 type AddressType = `0x${string}`
 
 export default function TokenBank() {
-	const { address, isConnected } = useAccount()
+	const { address, isConnected, isConnecting, isReconnecting } = useAccount()
 	const [depositAmount, setDepositAmount] = useState("")
 	const [directDepositAmount, setDirectDepositAmount] = useState("")
 	const [withdrawAmount, setWithdrawAmount] = useState("")
+	const [isMounted, setIsMounted] = useState(false)
+
+	useEffect(() => {
+		setIsMounted(true)
+	}, [])
 
 	// read token balance
 	const { data: tokenBalance, refetch: refetchTokenBalance } = useReadContract({
@@ -166,6 +171,17 @@ export default function TokenBank() {
 			functionName: "withdraw",
 			args: [CONTRACTS.MyToken as AddressType, parseEther(withdrawAmount)],
 		})
+	}
+
+	if (!isMounted) return null
+
+	if (isConnecting || isReconnecting) {
+		return (
+			<div className="flex flex-col items-center justify-center min-h-[60vh] py-20">
+				<div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-indigo-500 border-t-transparent mb-4"></div>
+				<p className="text-slate-600 text-lg">Connecting to your wallet...</p>
+			</div>
+		)
 	}
 
 	if (!isConnected) {

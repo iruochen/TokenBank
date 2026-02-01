@@ -35,6 +35,7 @@ TokenBank is a decentralized application (DApp) that allows users to deposit and
 - **Standard Deposit**: Classic `Approve` + `Deposit` flow for compatibility.
 - **Withdrawal**: Securely withdraw funds from the Bank contract.
 - **Real-time Balance**: Auto-refreshing balances for Wallet and Bank deposits.
+- **Transaction History**: View personal transaction records (Deposit/Withdraw) backed by a custom indexer.
 - **Responsive UI**: Modern, light-themed interface optimized for all devices.
 
 ### 🛠 Tech Stack
@@ -66,6 +67,7 @@ TokenBank is a decentralized application (DApp) that allows users to deposit and
 
     ```bash
     NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=your_reown_project_id
+    NEXT_PUBLIC_API_URL=http://localhost:3001/api
     ```
 
 4.  **Run Development Server**
@@ -93,6 +95,7 @@ TokenBank 是一个去中心化应用 (DApp)，允许用户安全地存取 ERC-2
 - **标准存款**: 经典的 `Approve` (授权) + `Deposit` (存款) 流程，保证兼容性。
 - **提现功能**: 从银行合约安全提取资金。
 - **实时余额**: 自动刷新钱包余额和银行存款余额。
+- **交易历史**: 查看个人存取款交易记录，支持分页查看 (基于自定义 Indexer 后端)。
 - **响应式 UI**: 现代化的亮色主题界面，适配各种设备。
 
 ### 🛠 技术栈
@@ -123,6 +126,7 @@ TokenBank 是一个去中心化应用 (DApp)，允许用户安全地存取 ERC-2
     在根目录下创建 `.env.local` 文件：
 
     ```bash
+    NEXT_PUBLIC_API_URL=http://localhost:3001/api
     NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID=你的_reown_project_id
     ```
 
